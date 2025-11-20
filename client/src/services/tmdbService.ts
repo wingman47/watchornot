@@ -1,5 +1,5 @@
 import axios from "axios";
-import { MediaData } from "../types";
+import { MediaData } from "../../types";
 
 const TMDB_KEY = import.meta.env.VITE_TMDB_KEY;
 const TMDB_BASE = "https://api.themoviedb.org/3";

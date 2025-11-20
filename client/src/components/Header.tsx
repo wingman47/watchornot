@@ -94,7 +94,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearch, loading, isDarkMode, t
             i
           </div>
           <span className="font-bold text-[10pt] text-black dark:text-white/90 leading-none pt-[1px] hidden sm:inline">
-            IMDb Graph
+            Watch || Not
           </span>
         </div>
 
@@ -119,7 +119,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearch, loading, isDarkMode, t
                     <li
                       key={index}
                       onClick={() => handleSuggestionClick(suggestion)}
-                      className="px-2 py-1 text-[10pt] text-black dark:text-gray-200 hover:bg-hn-bg dark:hover:bg-[#3a3a3a] cursor-pointer"
+                      className="px-2 py-1 text-[10pt] text-black dark:text-gray-200 dark:hover:bg-[#3a3a3a] cursor-pointer"
                     >
                       {suggestion}
                     </li>

@@ -1,5 +1,5 @@
 import React from "react";
-import { MediaData } from "../types";
+import { MediaData } from "../../types";
 
 interface MovieViewProps {
   data: MediaData;

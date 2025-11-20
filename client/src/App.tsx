@@ -4,7 +4,7 @@ import { GraphView } from "./components/GraphView";
 import { MovieView } from "./components/MovieView";
 // import { fetchMediaData } from "./services/geminiService";
 import { fetchMediaData } from "./services/tmdbService";
-import { MediaData } from "./types";
+import { MediaData } from "../types";
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(false);

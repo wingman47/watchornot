@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { MediaData, Episode } from "../types";
+import { MediaData, Episode } from "../../types";
 
 // Note: The 'types' are assumed to be available but are not provided here.
 // For the sake of this file, we assume MediaData and Episode are correctly defined.

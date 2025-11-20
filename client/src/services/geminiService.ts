@@ -1,5 +1,5 @@
 import { GoogleGenAI, Type } from "@google/genai";
-import { MediaData } from "../types";
+import { MediaData } from "../../types";
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
