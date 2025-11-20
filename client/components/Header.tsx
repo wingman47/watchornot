@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { fetchSuggestions } from "../services/geminiService";
+// import { fetchSuggestions } from "../services/geminiService";
+import { fetchSuggestions } from "../services/tmdbService";
 
 interface HeaderProps {
   onSearch: (query: string) => void;
@@ -31,6 +32,10 @@ export const Header: React.FC<HeaderProps> = ({ onSearch, loading, isDarkMode, t
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  
+  // CHANGED: Use useRef instead of useState to prevent re-render loops
+  const skipNextFetch = useRef(false);
+  
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Close suggestions when clicking outside
@@ -44,8 +49,14 @@ export const Header: React.FC<HeaderProps> = ({ onSearch, loading, isDarkMode, t
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Debounce fetch suggestions
+  // FIXED: Only one useEffect for fetching
   useEffect(() => {
+    // If the user just clicked a suggestion, skip this fetch
+    if (skipNextFetch.current) {
+      skipNextFetch.current = false; // Reset the flag silently
+      return;
+    }
+
     const timer = setTimeout(async () => {
       if (inputValue.trim().length >= 2) {
         const results = await fetchSuggestions(inputValue);
@@ -58,7 +69,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearch, loading, isDarkMode, t
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [inputValue]);
+  }, [inputValue]); // removed 'justSelected' from dependency
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,6 +80,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearch, loading, isDarkMode, t
   };
 
   const handleSuggestionClick = (suggestion: string) => {
+    skipNextFetch.current = true; // Set flag to skip the next useEffect run
     setInputValue(suggestion);
     setShowSuggestions(false);
     onSearch(suggestion);
@@ -78,7 +90,6 @@ export const Header: React.FC<HeaderProps> = ({ onSearch, loading, isDarkMode, t
     <header className="bg-hn-green dark:bg-[#1b5e20] p-[2px] flex items-center justify-between flex-wrap gap-2 relative z-50 transition-colors duration-300">
       <div className="flex items-center flex-grow gap-2">
         <div className="flex items-center gap-1 pl-1 shrink-0">
-          {/* Logo updated with black border */}
           <div className="bg-[#EAB308] text-black w-[20px] h-[20px] flex items-center justify-center text-[10pt] font-bold select-none border border-black">
             i
           </div>
@@ -101,7 +112,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearch, loading, isDarkMode, t
                 className="px-2 py-0.5 text-[10pt] w-full outline-none border border-gray-400 dark:border-gray-600 bg-white dark:bg-[#2a2a2a] text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 transition-colors"
                 disabled={loading}
               />
-              
+
               {showSuggestions && suggestions.length > 0 && (
                 <ul className="absolute top-full left-0 right-0 bg-white dark:bg-[#2a2a2a] border border-gray-400 dark:border-gray-600 mt-[1px] shadow-sm max-h-60 overflow-y-auto z-50">
                   {suggestions.map((suggestion, index) => (
@@ -129,7 +140,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearch, loading, isDarkMode, t
       </div>
 
       <div className="flex items-center gap-3 pr-2">
-        <button 
+        <button
           onClick={toggleTheme}
           className="p-1 rounded hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
           title="Toggle Dark Mode"

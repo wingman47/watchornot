@@ -2,7 +2,8 @@ import React, { useState, useCallback, useEffect } from "react";
 import { Header } from "./components/Header";
 import { GraphView } from "./components/GraphView";
 import { MovieView } from "./components/MovieView";
-import { fetchMediaData } from "./services/geminiService";
+// import { fetchMediaData } from "./services/geminiService";
+import { fetchMediaData } from "./services/tmdbService";
 import { MediaData } from "./types";
 
 const App: React.FC = () => {

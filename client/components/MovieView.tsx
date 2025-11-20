@@ -15,7 +15,7 @@ export const MovieView: React.FC<MovieViewProps> = ({ data }) => {
         <p className="text-[10pt] text-black dark:text-gray-300 mb-6 leading-relaxed max-w-3xl">{data.description}</p>
 
         <div className="flex items-baseline gap-2 mb-4">
-          <span className="text-[10pt] text-[#828282] dark:text-dark-subtext">IMDb Rating:</span>
+          <span className="text-[10pt] text-[#828282] dark:text-dark-subtext">Rating:</span>
           <span className="text-[24pt] font-bold text-hn-green dark:text-[#66bb6a]">{data.rating?.toFixed(1) || "N/A"}</span>
           <span className="text-[10pt] text-[#828282] dark:text-dark-subtext">/ 10</span>
         </div>

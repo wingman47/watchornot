@@ -194,7 +194,7 @@ export const GraphView: React.FC<GraphViewProps> = ({ data, isDarkMode }) => {
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-[9pt] bg-white dark:bg-[#1e1e1e] p-3 border border-gray-200 dark:border-[#333] shadow-sm min-w-[300px]">
                 <div>
-                    <p className="text-[#828282] dark:text-dark-subtext uppercase text-[8pt] tracking-wider mb-1">IMDb Rating</p>
+                    <p className="text-[#828282] dark:text-dark-subtext uppercase text-[8pt] tracking-wider mb-1">Rating</p>
                      <div className="flex items-baseline gap-1">
                         <span className="font-bold text-[24pt] text-hn-green dark:text-[#66bb6a] leading-none">
                             {globalStats.averageRating ? globalStats.averageRating.toFixed(1) : "N/A"}
@@ -294,7 +294,7 @@ export const GraphView: React.FC<GraphViewProps> = ({ data, isDarkMode }) => {
           </div>
           
           <div className="flex items-center gap-2">
-              <div className="w-3 h-3 relative flex items-center justify-center bg-[#EAB308] border border-black">
+              <div className="w-3 h-3 relative flex items-center justify-center">
                  <CrownIcon />
               </div>
               <span>Best (Season)</span>
