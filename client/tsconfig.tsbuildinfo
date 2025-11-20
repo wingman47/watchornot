@@ -1,0 +1,17 @@
+{
+    "root": [
+        "./eslint.config.js",
+        "./tailwind.config.js",
+        "./types.ts",
+        "./vite-env.d.ts",
+        "./vite.config.ts",
+        "./src/app.tsx",
+        "./src/main.tsx",
+        "./src/components/graphview.tsx",
+        "./src/components/header.tsx",
+        "./src/components/movieview.tsx",
+        "./src/services/geminiservice.ts",
+        "./src/services/tmdbservice.ts"
+    ],
+    "version": "5.9.3"
+}

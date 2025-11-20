@@ -64,6 +64,13 @@ export const GraphView: React.FC<GraphViewProps> = ({ data, isDarkMode }) => {
     };
   }, [data]);
 
+  const [tooltip, setTooltip] = useState<{
+    x: number;
+    y: number;
+    season: number;
+    episode: Episode;
+  } | null>(null);
+
   // --- Color Logic (Based on fixed rating buckets from image) ---
   const getCellStyle = (rating: number) => {
     let color: string;
@@ -86,6 +93,15 @@ export const GraphView: React.FC<GraphViewProps> = ({ data, isDarkMode }) => {
     return color;
   };
 
+  // Helper to get text color for rating in tooltip (slightly darker for readability if needed, 
+  // but for now using the same logic or a specific mapping)
+  const getRatingTextColor = (rating: number) => {
+     if (rating >= 8.5) return '#1b8700'; // Darker green
+     if (rating >= 7.6) return '#d1bc00'; // Darker yellow/orange
+     if (rating >= 6.5) return '#c47e00'; // Darker orange
+     return '#b31b1b'; // Darker red
+  };
+
   const handleCellClick = (seasonNum: number, episode: Episode) => {
     // Link to the season page for the main show ID. 
     if (data.imdbId && data.imdbId.startsWith('tt')) {
@@ -99,7 +115,7 @@ export const GraphView: React.FC<GraphViewProps> = ({ data, isDarkMode }) => {
   if (!data.seasons) return <div className="p-4">No data.</div>;
 
   return (
-    <div className="w-full">
+    <div className="w-full relative">
       {/* Expanded Show Info */}
        <div className="px-4 sm:px-8 md:px-12 mb-4">
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
@@ -199,7 +215,16 @@ export const GraphView: React.FC<GraphViewProps> = ({ data, isDarkMode }) => {
                                 className="w-[36px] h-[30px] cursor-pointer text-black text-[9pt] font-semibold flex items-center justify-center hover:brightness-110 transition-all duration-100"
                                 style={{ backgroundColor: bgColor }}
                                 onClick={() => handleCellClick(season.seasonNumber, episode)}
-                                title={`S${season.seasonNumber} E${episode.episodeNumber}: ${episode.title} (${episode.rating})`}
+                                onMouseEnter={(e) => {
+                                    const rect = e.currentTarget.getBoundingClientRect();
+                                    setTooltip({
+                                        x: rect.right,
+                                        y: rect.top,
+                                        season: season.seasonNumber,
+                                        episode
+                                    });
+                                }}
+                                onMouseLeave={() => setTooltip(null)}
                             >
                                 {/* Display Rating inside the cell */}
                                 {episode.rating.toFixed(1)}
@@ -212,7 +237,30 @@ export const GraphView: React.FC<GraphViewProps> = ({ data, isDarkMode }) => {
         </div>
       </div>
       
-      {/* Removed Tooltip and original Legend */}
+      {/* Custom Tooltip */}
+      {tooltip && (
+        <div 
+            className="fixed z-50 bg-[#fffbf0] dark:bg-[#1e1e1e] border border-gray-300 dark:border-[#333] shadow-xl p-3 min-w-[160px] pointer-events-none"
+            style={{ 
+                left: tooltip.x, 
+                top: tooltip.y,
+                transform: 'translate(0px, -10px)' 
+            }}
+        >
+            <div className="text-black dark:text-white font-bold text-[12pt] mb-0.5">
+                S{tooltip.season} E{tooltip.episode.episodeNumber}
+            </div>
+            <div className="text-black dark:text-gray-300 italic text-[10pt] mb-2 leading-tight">
+                {tooltip.episode.title}
+            </div>
+            <div className="font-bold text-[11pt] mb-0.5" style={{ color: getRatingTextColor(tooltip.episode.rating) }}>
+                Rating: {tooltip.episode.rating.toFixed(1)}
+            </div>
+            <div className="text-[#666] dark:text-gray-400 text-[10pt]">
+                {tooltip.episode.runtime ? `${tooltip.episode.runtime} min` : 'N/A'}
+            </div>
+        </div>
+      )}
     </div>
   );
 };
