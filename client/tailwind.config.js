@@ -10,7 +10,9 @@ export default {
       colors: {
         hn: {
           bg: '#f6f6ef',
-          green: '#2e7d32',
+          orange: '#ff6600',
+          text: '#000000',
+          subtext: '#828282',
         },
         dark: {
           bg: '#121212',

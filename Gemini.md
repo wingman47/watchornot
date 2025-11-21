@@ -1,5 +1,9 @@
 # Watch || Not
 
+## Design
+
+This project follows a brutalist design philosophy, similar to hackernews website. Please follow the same color scheme and layout.
+
 ## Project Overview
 
 This project aims to visualize TMDb TV Series data through a heatmap of episodes based on their rating to decide whether to watch something or not.
@@ -32,7 +36,7 @@ This directory contains the source code for the single-page application (SPA) th
     *   `client/src/main.tsx`: The primary TypeScript entry point where the React application is rendered.
     *   `client/src/App.tsx`: The root component of the React application, often containing routing and global layout.
     *   `client/src/components/`: Contains reusable React UI components:
-        *   `GraphView.tsx`: Responsible for the heatmap based on the rating.
+        *   `HeatmapView.tsx`: Responsible for the heatmap based on the rating.
         *   `Header.tsx`: The application's header component.
         *   `MovieView.tsx`: Displays details related to TV series.
     *   `client/src/services/`: Houses logic for interacting with external APIs:

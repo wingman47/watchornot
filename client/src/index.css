@@ -1,2 +1,25 @@
 @import "tailwindcss";
 @config "../tailwind.config.js";
+
+
+@layer base {
+    body {
+        font-family: Verdana, Geneva, sans-serif;
+        background-color: #f6f6ef;
+        overscroll-behavior: none;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    html {
+        background-color: #f6f6ef;
+    }
+
+    @media (prefers-color-scheme: dark) {
+
+        body,
+        html {
+            background-color: #1e1e1e;
+        }
+    }
+}

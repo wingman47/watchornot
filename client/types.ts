@@ -24,7 +24,9 @@ export interface MediaData {
   rating?: number; // For movies
   seasons?: Season[]; // For series
   description?: string;
+  posterUrl?: string;
   imdbId?: string;
+  tmdbId?: number;
 }
 
 export interface ChartDataPoint {

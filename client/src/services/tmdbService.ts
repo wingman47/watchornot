@@ -40,7 +40,9 @@ export const fetchMediaData = async (query: string): Promise<MediaData> => {
       type: "movie",
       year: String(m.data.release_date?.slice(0, 4) || ""),
       description: m.data.overview,
+      posterUrl: m.data.poster_path ? `https://image.tmdb.org/t/p/w200${m.data.poster_path}` : undefined,
       imdbId,
+      tmdbId: m.data.id,
       rating: rating || null,
     };
   }
@@ -69,9 +71,11 @@ export const fetchMediaData = async (query: string): Promise<MediaData> => {
   return {
     title: tv.data.name,
     type: "series",
-    year: `${tv.data.first_air_date?.slice(0, 4) || ""}`,
+    year: String(tv.data.first_air_date?.slice(0, 4) || ""),
     description: tv.data.overview,
+    posterUrl: tv.data.poster_path ? `https://image.tmdb.org/t/p/w200${tv.data.poster_path}` : undefined,
     imdbId,
+    tmdbId: tv.data.id,
     seasons,
   };
 };
