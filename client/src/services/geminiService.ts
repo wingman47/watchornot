@@ -1,6 +1,6 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { MediaData } from "../../types";
-// this is a test commit for github bot
+// this is another test commit for github bot 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const fetchMediaData = async (query: string): Promise<MediaData> => {
